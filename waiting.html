@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>解答速報 準備中 | お仕事カルテ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: linear-gradient(135deg, #fff5f8 0%, #fef3ff 50%, #f0f4ff 100%);
+      min-height: 100vh;
+      color: #333;
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ===== ヘッダー ===== */
+    .page-header {
+      background: linear-gradient(135deg, #ff6b9d 0%, #c44dff 60%, #7b68ee 100%);
+      padding: 24px 20px 28px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-header::before {
+      content: '';
+      position: absolute;
+      top: -40px; left: -40px;
+      width: 140px; height: 140px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 50%;
+    }
+    .page-header::after {
+      content: '';
+      position: absolute;
+      bottom: -30px; right: -30px;
+      width: 100px; height: 100px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 50%;
+    }
+    .header-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.22);
+      border: 1.5px solid rgba(255,255,255,0.4);
+      border-radius: 999px;
+      padding: 5px 18px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 1;
+    }
+    .header-title {
+      font-size: 1.25rem;
+      font-weight: 900;
+      color: #fff;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.15);
+      position: relative;
+      z-index: 1;
+      line-height: 1.4;
+    }
+
+    /* ===== メインコンテナ ===== */
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 32px 16px 48px;
+      flex: 1;
+    }
+
+    /* ===== 受付完了カード ===== */
+    .complete-card {
+      background: #fff;
+      border-radius: 24px;
+      padding: 36px 24px;
+      text-align: center;
+      box-shadow: 0 6px 32px rgba(255,107,157,0.1);
+      border: 2px solid rgba(255,182,193,0.25);
+      margin-bottom: 20px;
+    }
+    .complete-icon {
+      font-size: 3.5rem;
+      margin-bottom: 16px;
+      animation: bounce 1.5s ease infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .complete-title {
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: #333;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+    .complete-sub {
+      font-size: 0.88rem;
+      color: #666;
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+    .complete-sub strong {
+      color: #c44dff;
+      font-weight: 900;
+    }
+
+    /* ===== 速報公開予定バナー ===== */
+    .schedule-banner {
+      background: linear-gradient(135deg, #fff8e1, #fff3e0);
+      border: 2px solid #ffcc02;
+      border-radius: 16px;
+      padding: 18px 20px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .schedule-banner-icon { font-size: 1.6rem; flex-shrink: 0; }
+    .schedule-banner-text { font-size: 0.85rem; color: #555; line-height: 1.8; }
+    .schedule-banner-text strong { color: #e65100; font-weight: 900; font-size: 0.95rem; }
+
+    /* ===== 通知ポイント ===== */
+    .notify-steps {
+      background: #fff;
+      border-radius: 20px;
+      padding: 24px 20px;
+      box-shadow: 0 4px 20px rgba(255,107,157,0.07);
+      border: 2px solid rgba(255,182,193,0.2);
+      margin-bottom: 20px;
+    }
+    .notify-steps-title {
+      font-size: 0.85rem;
+      font-weight: 900;
+      color: #888;
+      text-align: center;
+      margin-bottom: 18px;
+      letter-spacing: 0.05em;
+    }
+    .step-list { list-style: none; }
+    .step-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1.5px solid #f5f5f5;
+    }
+    .step-item:last-child { border-bottom: none; }
+    .step-num {
+      width: 28px; height: 28px;
+      background: linear-gradient(135deg, #ff6b9d, #c44dff);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.72rem;
+      font-weight: 900;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .step-text { font-size: 0.85rem; color: #555; line-height: 1.6; padding-top: 4px; }
+    .step-text strong { color: #333; font-weight: 900; }
+
+    /* ===== TOPへ戻るボタン ===== */
+    .back-btn {
+      display: block;
+      width: 100%;
+      padding: 16px 24px;
+      background: linear-gradient(135deg, #ff6b9d, #c44dff);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 900;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      font-family: 'Noto Sans JP', sans-serif;
+      text-decoration: none;
+      text-align: center;
+      box-shadow: 0 6px 20px rgba(255,107,157,0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .back-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(255,107,157,0.45); }
+
+    /* ===== フッター ===== */
+    footer {
+      background: #fff;
+      border-top: 1.5px solid #f0e6f0;
+      padding: 18px 16px;
+      text-align: center;
+    }
+    footer p { font-size: 0.75rem; color: #aaa; line-height: 1.8; }
+    footer a { color: #c44dff; text-decoration: underline; }
+    footer .copy { font-size: 0.72rem; color: #ccc; margin-top: 6px; }
+  </style>
+</head>
+<body>
+
+  <div class="page-header">
+    <div class="header-badge">📋 保育士試験 解答速報</div>
+    <h1 class="header-title">情報の受付が<br>完了しました！</h1>
+  </div>
+
+  <div class="container">
+
+    <div class="complete-card">
+      <div class="complete-icon">📬</div>
+      <h2 class="complete-title">ご登録ありがとうございます！</h2>
+      <p class="complete-sub">
+        現在、解答速報を<strong>鋭意作成中</strong>です。<br>
+        速報が公開され次第、ご登録いただいた<br>
+        <strong>ご連絡先にお知らせいたします。</strong><br>
+        もうしばらくお待ちください。
+      </p>
+    </div>
+
+    <div class="schedule-banner">
+      <div class="schedule-banner-icon">⏰</div>
+      <div class="schedule-banner-text">
+        <strong>試験終了後3時間以内に公開予定</strong><br>
+        解答速報は試験終了後、最速で公開いたします。公開後はこのページを再読み込みするか、ご連絡先へのお知らせをお待ちください。
+      </div>
+    </div>
+
+    <div class="notify-steps">
+      <div class="notify-steps-title">📣 速報公開後の流れ</div>
+      <ul class="step-list">
+        <li class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-text"><strong>速報公開</strong>：試験終了後3時間以内に解答速報を公開します</div>
+        </li>
+        <li class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-text"><strong>お知らせ</strong>：ご登録いただいたご連絡先に担当CAからご連絡いたします</div>
+        </li>
+        <li class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-text"><strong>速報確認</strong>：公開後はこのページを手動で再読み込みすると速報ページへ移動します</div>
+        </li>
+      </ul>
+    </div>
+
+    <a href="index.html" class="back-btn">🏠 TOPページへ戻る</a>
+
+  </div>
+
+  <footer>
+    <p>ご入力いただいた情報は転職サポートのご案内のみに使用し、第三者への提供は一切行いません。<br>
+    <a href="https://www.piala.co.jp/privacy" target="_blank" rel="noopener">プライバシーポリシー</a></p>
+    <p class="copy">&copy; お仕事カルテ</p>
+  </footer>
+
+</body>
+</html>

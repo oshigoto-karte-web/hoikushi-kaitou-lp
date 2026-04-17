@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>解答速報を見る | お仕事カルテ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: linear-gradient(135deg, #fff5f8 0%, #fef3ff 50%, #f0f4ff 100%);
+      min-height: 100vh;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* ===== ヘッダー ===== */
+    .survey-header {
+      background: linear-gradient(135deg, #ff6b9d 0%, #c44dff 60%, #7b68ee 100%);
+      padding: 28px 20px 32px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .survey-header::before {
+      content: '';
+      position: absolute;
+      top: -40px; left: -40px;
+      width: 140px; height: 140px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 50%;
+    }
+    .survey-header::after {
+      content: '';
+      position: absolute;
+      bottom: -30px; right: -30px;
+      width: 100px; height: 100px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 50%;
+    }
+    .header-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.22);
+      border: 1.5px solid rgba(255,255,255,0.4);
+      border-radius: 999px;
+      padding: 5px 18px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
+    }
+    .header-title {
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 8px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.15);
+      position: relative;
+      z-index: 1;
+      line-height: 1.4;
+    }
+    .header-sub {
+      font-size: 0.83rem;
+      color: rgba(255,255,255,0.88);
+      font-weight: 500;
+      position: relative;
+      z-index: 1;
+      line-height: 1.6;
+    }
+
+    /* ===== メインコンテナ ===== */
+    .survey-container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 24px 16px 48px;
+    }
+
+    /* ===== 進捗バー ===== */
+    .progress-wrap {
+      background: #fff;
+      border-radius: 16px;
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 12px rgba(255,107,157,0.08);
+      border: 1.5px solid rgba(255,182,193,0.2);
+    }
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .progress-text { font-size: 0.8rem; color: #888; font-weight: 600; }
+    .progress-count { font-size: 0.88rem; color: #ff6b9d; font-weight: 900; }
+    .progress-bar-bg {
+      background: #f5f5f5;
+      border-radius: 999px;
+      height: 8px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #ff6b9d, #c44dff);
+      border-radius: 999px;
+      transition: width 0.4s ease;
+      width: 0%;
+    }
+
+    /* ===== フォームカード ===== */
+    .form-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 14px;
+      box-shadow: 0 4px 20px rgba(255,107,157,0.07);
+      border: 2px solid rgba(255,182,193,0.2);
+      transition: border-color 0.25s, box-shadow 0.25s;
+    }
+    .form-card.filled {
+      border-color: rgba(255,107,157,0.45);
+      box-shadow: 0 4px 20px rgba(255,107,157,0.13);
+    }
+    .form-card.hidden {
+      display: none;
+    }
+    .form-card-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .form-card-num {
+      width: 30px; height: 30px;
+      background: linear-gradient(135deg, #ff6b9d, #c44dff);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 900;
+      color: #fff;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .form-card-info { flex: 1; }
+    .form-card-title {
+      font-size: 0.95rem;
+      font-weight: 900;
+      color: #333;
+      line-height: 1.4;
+    }
+    .form-card-title .req { color: #ff6b9d; font-size: 0.75rem; margin-left: 3px; }
+    .form-card-hint {
+      font-size: 0.75rem;
+      color: #aaa;
+      margin-top: 3px;
+    }
+    .check-mark {
+      font-size: 1.2rem;
+      opacity: 0;
+      transition: opacity 0.3s, transform 0.3s;
+      transform: scale(0);
+    }
+    .form-card.filled .check-mark { opacity: 1; transform: scale(1); }
+
+    /* ===== テキスト入力 ===== */
+    .form-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #e8e8e8;
+      border-radius: 12px;
+      font-size: 0.93rem;
+      font-family: 'Noto Sans JP', sans-serif;
+      color: #333;
+      background: #fafafa;
+      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+      -webkit-appearance: none;
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: #ff6b9d;
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(255,107,157,0.12);
+    }
+    .form-input::placeholder { color: #bbb; }
+    .input-row { display: flex; align-items: center; gap: 8px; }
+    .input-row .form-input { flex: 1; }
+    .input-unit { font-size: 0.9rem; color: #666; font-weight: 600; white-space: nowrap; }
+
+    /* ===== YES/NOボタン ===== */
+    .yesno-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .yesno-item { position: relative; }
+    .yesno-item input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0; height: 0;
+    }
+    .yesno-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 16px 14px;
+      background: #fafafa;
+      border: 2px solid #e8e8e8;
+      border-radius: 14px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 900;
+      color: #555;
+      transition: all 0.2s;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      text-align: center;
+    }
+    .yesno-item input[type="radio"]:checked + .yesno-label {
+      background: linear-gradient(135deg, #fff0f5, #fce4ec);
+      border-color: #ff6b9d;
+      color: #c2185b;
+      box-shadow: 0 4px 14px rgba(255,107,157,0.2);
+    }
+    .yesno-label:hover { border-color: #ffb3c8; background: #fff8fb; }
+    .yesno-label:active { transform: scale(0.97); }
+
+    /* ===== ラジオ選択肢 ===== */
+    .choice-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+    .choice-item { position: relative; }
+    .choice-item input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0; height: 0;
+    }
+    .choice-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 14px;
+      background: #fafafa;
+      border: 2px solid #e8e8e8;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 0.87rem;
+      font-weight: 600;
+      color: #555;
+      transition: all 0.2s;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      line-height: 1.4;
+    }
+    .choice-label::before {
+      content: '';
+      width: 18px; height: 18px;
+      border: 2px solid #ddd;
+      border-radius: 50%;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      background: #fff;
+    }
+    .choice-item input[type="radio"]:checked + .choice-label {
+      background: linear-gradient(135deg, #fff0f5, #fce4ec);
+      border-color: #ff6b9d;
+      color: #c2185b;
+    }
+    .choice-item input[type="radio"]:checked + .choice-label::before {
+      background: linear-gradient(135deg, #ff6b9d, #c44dff);
+      border-color: transparent;
+      box-shadow: inset 0 0 0 3px #fff;
+    }
+    .choice-label:hover { border-color: #ffb3c8; background: #fff8fb; }
+    .choice-label:active { transform: scale(0.98); }
+
+    /* ===== CTA（分岐終了時） ===== */
+    .cta-section {
+      display: none;
+      background: linear-gradient(135deg, #fff0f5, #f3e8ff);
+      border: 2px solid rgba(255,107,157,0.3);
+      border-radius: 20px;
+      padding: 28px 20px;
+      margin-top: 14px;
+      text-align: center;
+    }
+    .cta-section.show { display: block; }
+    .cta-section-title {
+      font-size: 1.05rem;
+      font-weight: 900;
+      color: #c2185b;
+      margin-bottom: 8px;
+    }
+    .cta-section-sub {
+      font-size: 0.85rem;
+      color: #666;
+      margin-bottom: 20px;
+      line-height: 1.7;
+    }
+    .cta-result-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #ff6b9d, #c44dff);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 900;
+      padding: 16px 32px;
+      border-radius: 999px;
+      text-decoration: none;
+      box-shadow: 0 6px 20px rgba(255,107,157,0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .cta-result-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(255,107,157,0.5); }
+    .cta-result-btn:active { transform: translateY(0); }
+
+    /* ===== エラー表示 ===== */
+    .err-msg {
+      color: #e53935;
+      font-size: 0.76rem;
+      font-weight: 700;
+      margin-top: 6px;
+      display: none;
+    }
+    .err-msg.show { display: block; }
+
+    /* ===== 送信ボタン ===== */
+    .submit-section { margin-top: 28px; text-align: center; display: none; }
+    .submit-section.show { display: block; }
+    .submit-note {
+      font-size: 0.77rem;
+      color: #aaa;
+      margin-bottom: 14px;
+      line-height: 1.7;
+    }
+    .submit-btn {
+      display: block;
+      width: 100%;
+      padding: 18px 24px;
+      background: linear-gradient(135deg, #ff6b9d, #c44dff);
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 900;
+      border: none;
+      border-radius: 16px;
+      cursor: pointer;
+      box-shadow: 0 6px 24px rgba(255,107,157,0.35);
+      transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+      font-family: 'Noto Sans JP', sans-serif;
+      -webkit-appearance: none;
+    }
+    .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(255,107,157,0.45); }
+    .submit-btn:active { transform: translateY(0); }
+    .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    /* ===== 完了セクション ===== */
+    .complete-section {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .complete-section.show { display: block; }
+    .complete-icon { font-size: 3rem; margin-bottom: 16px; }
+    .complete-title {
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: #c2185b;
+      margin-bottom: 12px;
+    }
+    .complete-sub {
+      font-size: 0.88rem;
+      color: #666;
+      line-height: 1.8;
+      margin-bottom: 28px;
+    }
+    .complete-result-box {
+      background: linear-gradient(135deg, #fff0f5, #f3e8ff);
+      border: 2px solid rgba(255,107,157,0.3);
+      border-radius: 20px;
+      padding: 24px 20px;
+      margin-bottom: 20px;
+    }
+    .complete-result-label {
+      font-size: 0.85rem;
+      color: #888;
+      margin-bottom: 14px;
+      font-weight: 600;
+    }
+    .result-link-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #ff6b9d, #c44dff);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 900;
+      padding: 16px 32px;
+      border-radius: 999px;
+      text-decoration: none;
+      box-shadow: 0 6px 20px rgba(255,107,157,0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .result-link-btn:hover { transform: translateY(-2px); }
+    .divider-or {
+      font-size: 0.78rem;
+      color: #bbb;
+      margin: 16px 0;
+      position: relative;
+    }
+    .divider-or::before, .divider-or::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 40%;
+      height: 1px;
+      background: #e8e8e8;
+    }
+    .divider-or::before { left: 0; }
+    .divider-or::after { right: 0; }
+    .cta-tel {
+      display: inline-block;
+      background: #fff;
+      border: 2px solid rgba(255,107,157,0.3);
+      color: #c2185b;
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 12px 28px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .cta-tel:hover { background: #fff0f5; border-color: #ff6b9d; }
+
+    /* ===== フォームセクション ===== */
+    .form-section.hidden { display: none; }
+
+    /* ===== 速報ロック説明バナー ===== */
+    .lock-banner {
+      background: linear-gradient(135deg, #fff8e1, #fff3e0);
+      border: 2px solid #ffcc02;
+      border-radius: 16px;
+      padding: 16px 18px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .lock-banner-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 2px; }
+    .lock-banner-text { font-size: 0.83rem; color: #555; line-height: 1.7; }
+    .lock-banner-text strong { color: #e65100; font-weight: 900; }
+  </style>
+</head>
+<body>
+
+<!-- ヘッダー -->
+<div class="survey-header">
+  <div class="header-badge">📋 保育士試験 解答速報</div>
+  <h1 class="header-title">解答速報を閲覧するために<br>あなたの情報を教えてください</h1>
+  <p class="header-sub">入力後すぐに解答速報をご覧いただけます。<br>完全無料・登録不要です。</p>
+</div>
+
+<div class="survey-container">
+
+  <!-- 速報ロック説明バナー -->
+  <div class="lock-banner">
+    <div class="lock-banner-icon">🔓</div>
+    <div class="lock-banner-text">
+      <strong>解答速報は無料で閲覧できます。</strong><br>
+      下記の情報を入力して送信すると、すぐに解答速報ページへ移動します。<br>
+      いただいた情報は転職サポートのご案内にのみ使用します。
+    </div>
+  </div>
+
+  <!-- フォームセクション -->
+  <div class="form-section" id="form-section">
+
+    <!-- 進捗バー -->
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span class="progress-text">入力進捗</span>
+        <span class="progress-count" id="progress-count">0 / 4 項目入力済み</span>
+      </div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progress-bar"></div>
+      </div>
+    </div>
+
+    <!-- Q1: お名前 -->
+    <div class="form-card" id="card-name">
+      <div class="form-card-header">
+        <div class="form-card-num">1</div>
+        <div class="form-card-info">
+          <div class="form-card-title">記入者のお名前<span class="req">＊</span></div>
+          <div class="form-card-hint">CAがご連絡させていただく際に使用します</div>
+        </div>
+        <span class="check-mark">✅</span>
+      </div>
+      <input type="text" name="name" class="form-input" placeholder="例：山田太郎" autocomplete="name" />
+      <p class="err-msg" id="err-name">お名前を入力してください</p>
+    </div>
+
+    <!-- Q2: 年齢 -->
+    <div class="form-card" id="card-age">
+      <div class="form-card-header">
+        <div class="form-card-num">2</div>
+        <div class="form-card-info">
+          <div class="form-card-title">年齢<span class="req">＊</span></div>
+        </div>
+        <span class="check-mark">✅</span>
+      </div>
+      <div class="input-row">
+        <input type="number" name="age" class="form-input" placeholder="例：28" min="18" max="80" inputmode="numeric" />
+        <span class="input-unit">歳</span>
+      </div>
+      <p class="err-msg" id="err-age">年齢を入力してください</p>
+    </div>
+
+    <!-- Q3: 電話番号 -->
+    <div class="form-card" id="card-tel">
+      <div class="form-card-header">
+        <div class="form-card-num">3</div>
+        <div class="form-card-info">
+          <div class="form-card-title">電話番号<span class="req">＊</span></div>
+          <div class="form-card-hint">ハイフンなしでもOKです</div>
+        </div>
+        <span class="check-mark">✅</span>
+      </div>
+      <input type="tel" name="tel" class="form-input" placeholder="例：09012345678" autocomplete="tel" inputmode="tel" />
+      <p class="err-msg" id="err-tel">電話番号を入力してください</p>
+    </div>
+
+    <!-- Q4: 住所 -->
+    <div class="form-card" id="card-address">
+      <div class="form-card-header">
+        <div class="form-card-num">4</div>
+        <div class="form-card-info">
+          <div class="form-card-title">住所<span class="req">＊</span></div>
+          <div class="form-card-hint">都道府県・市区町村までで構いません</div>
+        </div>
+        <span class="check-mark">✅</span>
+      </div>
+      <input type="text" name="address" class="form-input" placeholder="例：東京都新宿区" autocomplete="address-level1" />
+      <p class="err-msg" id="err-address">住所を入力してください</p>
+    </div>
+
+    <!-- Q5: 就職先が決まっているか（YES/NO） -->
+    <div class="form-card" id="card-employed">
+      <div class="form-card-header">
+        <div class="form-card-num">5</div>
+        <div class="form-card-info">
+          <div class="form-card-title">就職先が決まっているかどうか</div>
+        </div>
+        <span class="check-mark">✅</span>
+      </div>
+      <div class="yesno-grid">
+        <div class="yesno-item">
+          <input type="radio" id="employed-yes" name="employed" value="YES" />
+          <label for="employed-yes" class="yesno-label">✅ YES</label>
+        </div>
+        <div class="yesno-item">
+          <input type="radio" id="employed-no" name="employed" value="NO" />
+          <label for="employed-no" class="yesno-label">❌ NO</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5-YES: 就職先決定→CTA表示 -->
+    <div class="cta-section" id="cta-employed-yes">
+      <div class="cta-section-title">🎉 おめでとうございます！</div>
+      <div class="cta-section-sub">就職先が決まっているとのこと、おめでとうございます！<br>解答速報をご確認ください。</div>
+      <a href="#" class="cta-result-btn" id="cta-result-link-employed" onclick="sendAndGo(this, event)">📋 解答速報を見る</a>
+    </div>
+
+    <!-- Q6: サポートを希望するか（YES/NO） -->
+    <div class="form-card hidden" id="card-support">
+      <div class="form-card-header">
+        <div class="form-card-num">6</div>
+        <div class="form-card-info">
+          <div class="form-card-title">お仕事のご紹介やサポートを希望されるかどうか</div>
+        </div>
+        <span class="check-mark">✅</span>
+      </div>
+      <div class="yesno-grid">
+        <div class="yesno-item">
+          <input type="radio" id="support-yes" name="support" value="YES" />
+          <label for="support-yes" class="yesno-label">✅ YES</label>
+        </div>
+        <div class="yesno-item">
+          <input type="radio" id="support-no" name="support" value="NO" />
+          <label for="support-no" class="yesno-label">❌ NO</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q6-NO: サポート不要→CTA表示 -->
+    <div class="cta-section" id="cta-support-no">
+      <div class="cta-section-title">✨ ありがとうございます！</div>
+      <div class="cta-section-sub">ご回答ありがとうございました。<br>解答速報をご確認ください。</div>
+      <a href="#" class="cta-result-btn" id="cta-result-link-support" onclick="sendAndGo(this, event)">📋 解答速報を見る</a>
+    </div>
+
+    <!-- Q7: 連絡しやすい時間帯（サポートYESの場合のみ） -->
+    <div class="form-card hidden" id="card-contact">
+      <div class="form-card-header">
+        <div class="form-card-num">7</div>
+        <div class="form-card-info">
+          <div class="form-card-title">連絡しやすい時間帯<span class="req">＊</span></div>
+          <div class="form-card-hint">CAからのご連絡がしやすい時間帯をお選びください</div>
+        </div>
+        <span class="check-mark">✅</span>
+      </div>
+      <div class="choice-grid">
+        <div class="choice-item">
+          <input type="radio" id="contact1" name="contact_time" value="朝8時〜10時" />
+          <label for="contact1" class="choice-label">🌅 朝8時〜10時</label>
+        </div>
+        <div class="choice-item">
+          <input type="radio" id="contact2" name="contact_time" value="昼12時〜14時" />
+          <label for="contact2" class="choice-label">☀️ 昼12時〜14時</label>
+        </div>
+        <div class="choice-item">
+          <input type="radio" id="contact3" name="contact_time" value="夕方16時〜18時" />
+          <label for="contact3" class="choice-label">🌇 夕方16時〜18時</label>
+        </div>
+        <div class="choice-item">
+          <input type="radio" id="contact4" name="contact_time" value="夜間19時〜21時" />
+          <label for="contact4" class="choice-label">🌙 夜間19時〜21時</label>
+        </div>
+        <div class="choice-item">
+          <input type="radio" id="contact5" name="contact_time" value="いつでも大丈夫" />
+          <label for="contact5" class="choice-label">🙆 いつでも大丈夫</label>
+        </div>
+      </div>
+      <p class="err-msg" id="err-contact">連絡しやすい時間帯を選択してください</p>
+    </div>
+
+    <!-- 送信ボタン（Q7まで回答した場合のみ表示） -->
+    <div class="submit-section" id="submit-section">
+      <p class="submit-note">
+        ご入力いただいた情報は、転職サポートのみに使用いたします。<br>
+        第三者への提供は一切行いません。
+      </p>
+      <button type="button" class="submit-btn" id="submit-btn" onclick="submitForm()">
+        📋 送信して解答速報を見る！
+      </button>
+    </div>
+
+  </div><!-- /form-section -->
+
+  <!-- 完了セクション（送信後） -->
+  <div class="complete-section" id="complete-section">
+    <div class="complete-icon">🎉</div>
+    <h2 class="complete-title">ありがとうございます！</h2>
+    <p class="complete-sub">
+      ご回答ありがとうございました。<br>
+      担当CAがあなたにぴったりなお仕事をお探しいたします。<br>
+      <strong>解答速報をご確認ください！</strong>
+    </p>
+    <div class="complete-result-box">
+      <p class="complete-result-label">📋 解答速報はこちら</p>
+      <a href="answer.html" class="result-link-btn" id="result-link">📋 解答速報を見る</a>
+    </div>
+    <div class="divider-or">または</div>
+    <a href="tel:03-6821-2126" class="cta-tel">📞 電話で相談する（無料）</a>
+  </div>
+
+</div><!-- /survey-container -->
+
+<!-- フッター -->
+<footer style="background:#fff;border-top:1.5px solid #f0e6f0;padding:18px 16px;text-align:center;margin-top:0;">
+  <p style="font-size:0.75rem;color:#aaa;line-height:1.8;">ご入力いただいた情報は転職サポートのご案内のみに使用し、第三者への提供は一切行いません。<br>
+  <a href="https://www.piala.co.jp/privacy" target="_blank" rel="noopener" style="color:#c44dff;text-decoration:underline;">プライバシーポリシー</a></p>
+  <p style="font-size:0.72rem;color:#ccc;margin-top:6px;">&copy; お仕事カルテ</p>
+</footer>
+
+<script>
+  // ===== GASエンドポイント（デプロイ後に差し替えてください） =====
+  const GAS_URL = 'YOUR_GAS_ENDPOINT_URL';
+
+  // ===== 進捗管理（必須4項目） =====
+  function val(sel) { return document.querySelector(sel)?.value?.trim() || ''; }
+  function checked(sel) { return !!document.querySelector(sel + ':checked'); }
+
+  function getRequiredCount() {
+    let n = 0;
+    if (val('input[name="name"]')) n++;
+    if (val('input[name="age"]')) n++;
+    if (val('input[name="tel"]')) n++;
+    if (val('input[name="address"]')) n++;
+    return n;
+  }
+
+  function updateProgress() {
+    const n = getRequiredCount();
+    const total = 4;
+    const pct = Math.round((n / total) * 100);
+    document.getElementById('progress-count').textContent = `${n} / ${total} 項目入力済み`;
+    document.getElementById('progress-bar').style.width = `${pct}%`;
+  }
+
+  function setFilled(cardId, filled) {
+    document.getElementById(cardId)?.classList.toggle('filled', filled);
+  }
+
+  function refreshCards() {
+    setFilled('card-name', !!val('input[name="name"]'));
+    setFilled('card-age', !!val('input[name="age"]'));
+    setFilled('card-tel', !!val('input[name="tel"]'));
+    setFilled('card-address', !!val('input[name="address"]'));
+    setFilled('card-employed', checked('input[name="employed"]'));
+    setFilled('card-support', checked('input[name="support"]'));
+    setFilled('card-contact', checked('input[name="contact_time"]'));
+    updateProgress();
+  }
+
+  document.querySelectorAll('input').forEach(el => {
+    el.addEventListener('input', refreshCards);
+    el.addEventListener('change', refreshCards);
+  });
+
+  // ===== 分岐ロジック =====
+  document.querySelectorAll('input[name="employed"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+      const v = this.value;
+      const ctaEmployed = document.getElementById('cta-employed-yes');
+      const cardSupport = document.getElementById('card-support');
+      const ctaSupportNo = document.getElementById('cta-support-no');
+      const cardContact = document.getElementById('card-contact');
+      const submitSection = document.getElementById('submit-section');
+
+      if (v === 'YES') {
+        ctaEmployed.classList.add('show');
+        cardSupport.classList.add('hidden');
+        ctaSupportNo.classList.remove('show');
+        cardContact.classList.add('hidden');
+        submitSection.classList.remove('show');
+        document.querySelectorAll('input[name="support"]').forEach(r => r.checked = false);
+        document.querySelectorAll('input[name="contact_time"]').forEach(r => r.checked = false);
+      } else {
+        ctaEmployed.classList.remove('show');
+        cardSupport.classList.remove('hidden');
+        ctaSupportNo.classList.remove('show');
+        cardContact.classList.add('hidden');
+        submitSection.classList.remove('show');
+        document.querySelectorAll('input[name="support"]').forEach(r => r.checked = false);
+        document.querySelectorAll('input[name="contact_time"]').forEach(r => r.checked = false);
+      }
+      refreshCards();
+    });
+  });
+
+  document.querySelectorAll('input[name="support"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+      const v = this.value;
+      const ctaSupportNo = document.getElementById('cta-support-no');
+      const cardContact = document.getElementById('card-contact');
+      const submitSection = document.getElementById('submit-section');
+
+      if (v === 'NO') {
+        ctaSupportNo.classList.add('show');
+        cardContact.classList.add('hidden');
+        submitSection.classList.remove('show');
+        document.querySelectorAll('input[name="contact_time"]').forEach(r => r.checked = false);
+      } else {
+        ctaSupportNo.classList.remove('show');
+        cardContact.classList.remove('hidden');
+        submitSection.classList.add('show');
+      }
+      refreshCards();
+    });
+  });
+
+  // ===== バリデーション =====
+  function validate() {
+    let ok = true;
+    function chk(errId, filled) {
+      const el = document.getElementById(errId);
+      if (el) el.classList.toggle('show', !filled);
+      if (!filled) ok = false;
+    }
+    chk('err-name', !!val('input[name="name"]'));
+    chk('err-age', !!val('input[name="age"]'));
+    chk('err-tel', !!val('input[name="tel"]'));
+    chk('err-address', !!val('input[name="address"]'));
+    const submitVisible = document.getElementById('submit-section').classList.contains('show');
+    if (submitVisible) {
+      chk('err-contact', checked('input[name="contact_time"]'));
+    }
+    return ok;
+  }
+
+  // ===== 送信処理（Q7まで回答した場合） =====
+  async function submitForm() {
+    if (!validate()) {
+      const firstErr = document.querySelector('.err-msg.show');
+      if (firstErr) firstErr.closest('.form-card')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    btn.textContent = '⏳ 送信中...';
+
+    const data = {
+      name: val('input[name="name"]'),
+      age: val('input[name="age"]'),
+      tel: val('input[name="tel"]'),
+      address: val('input[name="address"]'),
+      employed: document.querySelector('input[name="employed"]:checked')?.value || '',
+      support: document.querySelector('input[name="support"]:checked')?.value || '',
+      contact_time: document.querySelector('input[name="contact_time"]:checked')?.value || '',
+      form_type: '保育士試験解答速報',
+      source: 'hoiku'
+    };
+
+    try {
+      await fetch(GAS_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+    } catch (e) { /* no-corsのためエラーは無視 */ }
+
+    // 公開フラグを確認して遷移先を決定
+    const dest = await getDestination();
+    window.location.href = dest;
+  }
+
+  // ===== CTAボタン用：GAS送信してから遷移 =====
+  async function sendAndGo(linkEl, e) {
+    e.preventDefault();
+    if (!validate()) {
+      const firstErr = document.querySelector('.err-msg.show');
+      if (firstErr) firstErr.closest('.form-card')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+    linkEl.style.pointerEvents = 'none';
+    linkEl.textContent = '⏳ 送信中...';
+
+    const data = {
+      name: val('input[name="name"]'),
+      age: val('input[name="age"]'),
+      tel: val('input[name="tel"]'),
+      address: val('input[name="address"]'),
+      employed: document.querySelector('input[name="employed"]:checked')?.value || '',
+      support: document.querySelector('input[name="support"]:checked')?.value || '',
+      contact_time: '',
+      form_type: '保育士試験解答速報',
+      source: 'hoiku'
+    };
+
+    try {
+      await fetch(GAS_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+    } catch (e) { /* no-corsのためエラーは無視 */ }
+
+    // 公開フラグを確認して遷移先を決定
+    const dest = await getDestination();
+    window.location.href = dest;
+  }
+
+  // ===== 公開フラグ確認（GAS GET） =====
+  async function getDestination() {
+    try {
+      const res = await fetch(GAS_URL + '?action=checkFlag', { mode: 'cors' });
+      const json = await res.json();
+      return json.published === true ? 'answer.html' : 'waiting.html';
+    } catch (e) {
+      // 取得失敗時はwaitingに飛ばす（安全側）
+      return 'waiting.html';
+    }
+  }
+
+  // ===== 初期化 =====
+  refreshCards();
+</script>
+</body>
+</html>

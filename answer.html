@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>保育士試験 解答速報 | お仕事カルテ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: #f5f5f5;
+      color: #222;
+      line-height: 1.6;
+      font-size: 13px;
+    }
+
+    /* ===== ヘッダー ===== */
+    .page-header {
+      background: linear-gradient(135deg, #ff6b9d 0%, #c44dff 60%, #7b68ee 100%);
+      padding: 20px 16px 22px;
+      text-align: center;
+    }
+    .page-header .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.22);
+      border: 1.5px solid rgba(255,255,255,0.4);
+      border-radius: 999px;
+      padding: 3px 14px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .page-header h1 {
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.5;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    }
+    .page-header .update {
+      margin-top: 6px;
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.85);
+    }
+
+    /* ===== メインコンテナ ===== */
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 14px 10px 50px;
+    }
+
+    /* ===== ローディング ===== */
+    .loading-wrap {
+      text-align: center;
+      padding: 60px 20px;
+    }
+    .loading-spinner {
+      width: 44px; height: 44px;
+      border: 4px solid rgba(255,107,157,0.2);
+      border-top-color: #ff6b9d;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 14px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-text { font-size: 0.85rem; color: #888; font-weight: 600; }
+
+    /* ===== 未公開メッセージ ===== */
+    .not-published {
+      background: #fff;
+      border-radius: 14px;
+      padding: 40px 24px;
+      text-align: center;
+      border: 1px solid #e0e0e0;
+    }
+    .not-published-icon { font-size: 2.5rem; margin-bottom: 12px; }
+    .not-published-title { font-size: 1rem; font-weight: 900; color: #c2185b; margin-bottom: 8px; }
+    .not-published-sub { font-size: 0.82rem; color: #888; line-height: 1.8; }
+
+    /* ===== 3列グリッドラッパー ===== */
+    .grid-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    /* ===== 科目ブロック ===== */
+    .subject-block {
+      background: #fff;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid #ddd;
+    }
+    .subject-title {
+      background: #3d3d5c;
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 6px 8px;
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    /* ===== 解答テーブル ===== */
+    .ans-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .ans-table thead tr { background: #efefef; }
+    .ans-table th {
+      padding: 4px 6px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: #666;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+    .ans-table td {
+      padding: 4px 6px;
+      font-size: 0.78rem;
+      border-bottom: 1px solid #f0f0f0;
+      text-align: center;
+      color: #333;
+    }
+    .ans-table tr:last-child td { border-bottom: none; }
+    .ans-table tr:nth-child(even) td { background: #fafafa; }
+    .q-no { color: #777; font-size: 0.72rem; }
+    .ans-val { font-weight: 700; font-size: 0.85rem; }
+
+    /* ===== エラーメッセージ ===== */
+    .error-wrap {
+      background: #fff;
+      border-radius: 14px;
+      padding: 32px 24px;
+      text-align: center;
+      border: 2px solid #ffd6d6;
+    }
+    .error-icon { font-size: 2.5rem; margin-bottom: 12px; }
+    .error-text { font-size: 0.88rem; color: #e53935; font-weight: 600; }
+
+    /* ===== CTAバナー ===== */
+    .cta-banner {
+      background: linear-gradient(135deg, #ff6b9d 0%, #c44dff 100%);
+      border-radius: 12px;
+      padding: 22px 18px;
+      text-align: center;
+      color: #fff;
+      margin-top: 16px;
+    }
+    .cta-banner h3 {
+      font-size: 0.9rem;
+      font-weight: 900;
+      line-height: 1.6;
+      margin-bottom: 8px;
+    }
+    .cta-banner p {
+      font-size: 0.72rem;
+      opacity: 0.9;
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+    .cta-btn {
+      display: inline-block;
+      background: #fff;
+      color: #c44dff;
+      font-size: 0.88rem;
+      font-weight: 900;
+      padding: 10px 28px;
+      border-radius: 40px;
+      text-decoration: none;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+    }
+    .cta-tel {
+      display: block;
+      font-size: 0.68rem;
+      opacity: 0.85;
+      margin-top: 8px;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    /* ===== フッター ===== */
+    footer {
+      background: #fff;
+      border-top: 1px solid #e8e8e8;
+      padding: 14px;
+      text-align: center;
+      margin-top: 16px;
+    }
+    footer p { font-size: 0.68rem; color: #aaa; line-height: 1.8; }
+    footer a { color: #c44dff; text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">📋 保育士試験 解答速報</div>
+  <h1 id="header-title">令和7年前期<br>保育士試験 解答速報</h1>
+  <p class="update" id="header-update">データを読み込み中...</p>
+</div>
+
+<div class="container">
+
+  <!-- ローディング -->
+  <div class="loading-wrap" id="loading-wrap">
+    <div class="loading-spinner"></div>
+    <p class="loading-text">解答速報を読み込んでいます...</p>
+  </div>
+
+  <!-- 未公開メッセージ -->
+  <div class="not-published" id="not-published" style="display:none;">
+    <div class="not-published-icon">⏳</div>
+    <h2 class="not-published-title">解答速報は準備中です</h2>
+    <p class="not-published-sub">試験終了後、最速で解答速報を公開いたします。<br>しばらくお待ちください。</p>
+  </div>
+
+  <!-- 解答一覧（動的生成） -->
+  <div id="answer-content" style="display:none;">
+    <div id="grid-wrap"></div>
+  </div>
+
+  <!-- エラー -->
+  <div class="error-wrap" id="error-wrap" style="display:none;">
+    <div class="error-icon">⚠️</div>
+    <p class="error-text">データの読み込みに失敗しました。<br>ページを再読み込みしてください。</p>
+  </div>
+
+  <!-- CTAバナー -->
+  <div class="cta-banner" id="cta-banner" style="display:none;">
+    <h3>🌸 保育士の転職をお考えですか？<br>専門のCAが無料でサポートします</h3>
+    <p>試験合格後の就職活動、在職中の転職活動など<br>あなたのペースに合わせてサポートいたします。</p>
+    <a href="tel:03-6821-2126" class="cta-btn">📞 無料で相談する</a>
+    <a href="tel:03-6821-2126" class="cta-tel">03-6821-2126（平日 9:00〜18:00）</a>
+  </div>
+
+</div>
+
+<footer>
+  <p>ご入力いただいた情報は転職サポートのご案内のみに使用し、第三者への提供は一切行いません。<br>
+  <a href="https://www.piala.co.jp/privacy" target="_blank" rel="noopener">プライバシーポリシー</a></p>
+  <p style="font-size:0.64rem;color:#ccc;margin-top:4px;">&copy; お仕事カルテ</p>
+</footer>
+
+<script>
+  // ===== GASエンドポイント（デプロイ後に差し替えてください） =====
+  const ANSWER_GAS_URL = 'YOUR_GAS_ENDPOINT_URL?action=getAnswers';
+
+  // 科目ブロックを生成する関数
+  function buildBlock(subject, rows) {
+    const trs = rows.map(r => `
+      <tr>
+        <td class="q-no">${r.question_no}</td>
+        <td class="ans-val">${r.answer}</td>
+      </tr>
+    `).join('');
+
+    return `
+      <div class="subject-block">
+        <div class="subject-title">${subject}</div>
+        <table class="ans-table">
+          <thead><tr><th>設問番号</th><th>解答</th></tr></thead>
+          <tbody>${trs}</tbody>
+        </table>
+      </div>
+    `;
+  }
+
+  // 解答速報データを取得して表示
+  async function loadAnswers() {
+    try {
+      const res = await fetch(ANSWER_GAS_URL);
+      const json = await res.json();
+
+      document.getElementById('loading-wrap').style.display = 'none';
+
+      if (!json.answers || json.answers.length === 0) {
+        document.getElementById('not-published').style.display = 'block';
+        document.getElementById('cta-banner').style.display = 'block';
+        return;
+      }
+
+      // 更新日時
+      if (json.updated_at) {
+        document.getElementById('header-update').textContent = '🕐 最終更新：' + json.updated_at;
+      }
+
+      // 科目ごとにグループ化（入力順を維持）
+      const subjectMap = {};
+      const subjectOrder = [];
+      json.answers.forEach(row => {
+        if (!subjectMap[row.subject]) {
+          subjectMap[row.subject] = [];
+          subjectOrder.push(row.subject);
+        }
+        subjectMap[row.subject].push(row);
+      });
+
+      // 3列グリッドで配置
+      const wrap = document.getElementById('grid-wrap');
+      wrap.innerHTML = '';
+      for (let i = 0; i < subjectOrder.length; i += 3) {
+        const rowDiv = document.createElement('div');
+        rowDiv.className = 'grid-row';
+        const chunk = subjectOrder.slice(i, i + 3);
+        rowDiv.innerHTML = chunk.map(s => buildBlock(s, subjectMap[s])).join('');
+        wrap.appendChild(rowDiv);
+      }
+
+      document.getElementById('answer-content').style.display = 'block';
+      document.getElementById('cta-banner').style.display = 'block';
+
+    } catch (err) {
+      document.getElementById('loading-wrap').style.display = 'none';
+      document.getElementById('error-wrap').style.display = 'block';
+      document.getElementById('cta-banner').style.display = 'block';
+      console.error('解答速報の取得に失敗:', err);
+    }
+  }
+
+  loadAnswers();
+</script>
+
+</body>
+</html>
