@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
@@ -9,7 +9,7 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Zen+Maru+Gothic:wght@700;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Shippori+Mincho:wght@400;500;600;700;800&family=Klee+One:wght@400;600&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet" />
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-58PC2E0PP7"></script>
@@ -24,197 +24,208 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --green-main: #3DAB7B;
-      --green-light: #5DC99A;
-      --green-pale: #E8F7F1;
-      --green-dark: #2A7A58;
-      --line-green: #06C755;
-      --line-green-dark: #05A847;
-      --text-dark: #1A1A1A;
-      --text-mid: #444444;
-      --text-light: #777777;
-      --bg-white: #FFFFFF;
-      --bg-pale: #F4FBF7;
-      --accent-red: #E8405A;
-      --accent-yellow: #FFD84D;
+      --pink-main:   #F2A7BB;
+      --pink-light:  #FAD4DF;
+      --pink-pale:   #FFF0F4;
+      --pink-deep:   #E07A97;
+      --peach:       #FDDECB;
+      --peach-deep:  #F4A882;
+      --mint:        #B8E8D8;
+      --mint-deep:   #7ECFB5;
+      --lavender:    #D8D0F0;
+      --cream:       #FFF8F0;
+      --text-dark:   #4A2C35;
+      --text-mid:    #7A4A55;
+      --text-light:  #B07A88;
+      --line-green:  #06C755;
+      --line-dark:   #05A847;
+      --white:       #FFFFFF;
     }
 
     html { font-size: 16px; }
 
     body {
-      font-family: 'Noto Sans JP', sans-serif;
-      background-color: var(--bg-white);
+      font-family: 'Zen Maru Gothic', 'Noto Sans JP', sans-serif;
+      background-color: var(--cream);
       color: var(--text-dark);
-      line-height: 1.6;
+      line-height: 1.7;
       -webkit-font-smoothing: antialiased;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    /* ===== TOP BANNER ===== */
+    .top-banner {
+      background: linear-gradient(90deg, #F2A7BB 0%, #F4B8C8 50%, #F2A7BB 100%);
+      text-align: center;
+      padding: 8px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.05em;
     }
 
     /* ===== HERO ===== */
     .hero {
-      background: linear-gradient(160deg, #2A7A58 0%, #3DAB7B 45%, #6DCFA0 100%);
-      padding: 0;
+      background:
+        radial-gradient(ellipse at 80% 10%, rgba(255,182,193,0.45) 0%, transparent 55%),
+        radial-gradient(ellipse at 10% 80%, rgba(253,222,203,0.5) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(255,240,244,0.9) 0%, #FFF8F0 100%);
+      padding: 32px 24px 40px;
       position: relative;
       overflow: hidden;
+      text-align: center;
     }
 
+    /* 水彩風の背景装飾 */
     .hero::before {
       content: '';
       position: absolute;
-      top: -60px; right: -60px;
-      width: 260px; height: 260px;
-      background: rgba(255,255,255,0.07);
+      top: -30px; right: -30px;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(242,167,187,0.25) 0%, transparent 70%);
       border-radius: 50%;
+      pointer-events: none;
     }
-
     .hero::after {
       content: '';
       position: absolute;
-      bottom: -40px; left: -40px;
-      width: 180px; height: 180px;
-      background: rgba(255,255,255,0.05);
+      bottom: 20px; left: -20px;
+      width: 150px; height: 150px;
+      background: radial-gradient(circle, rgba(253,222,203,0.35) 0%, transparent 70%);
       border-radius: 50%;
-    }
-
-    .hero-inner {
-      position: relative;
-      z-index: 1;
-      padding: 20px 20px 0;
-      text-align: center;
+      pointer-events: none;
     }
 
     .hero-badge {
       display: inline-block;
-      background: rgba(255,255,255,0.2);
-      border: 1px solid rgba(255,255,255,0.5);
+      background: linear-gradient(135deg, #F2A7BB, #F4A882);
       color: #fff;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
-      letter-spacing: 0.08em;
-      padding: 5px 14px;
+      padding: 4px 16px;
       border-radius: 20px;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
+      letter-spacing: 0.08em;
     }
 
     .hero-date {
-      color: var(--accent-yellow);
       font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      margin-bottom: 8px;
+      color: var(--text-mid);
+      margin-bottom: 16px;
+      font-weight: 500;
+    }
+
+    .hero-catch {
+      font-family: 'Klee One', 'Shippori Mincho', serif;
+      font-size: 18px;
+      color: var(--text-mid);
+      margin-bottom: 6px;
+      font-weight: 600;
     }
 
     .hero-title {
-      font-family: 'Zen Maru Gothic', sans-serif;
-      font-size: 38px;
-      font-weight: 900;
-      color: #fff;
-      line-height: 1.2;
-      margin-bottom: 6px;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      font-family: 'Shippori Mincho', serif;
+      font-size: 34px;
+      font-weight: 800;
+      line-height: 1.3;
+      color: var(--text-dark);
+      margin-bottom: 16px;
     }
 
-    .hero-title span {
-      font-size: 26px;
-      display: block;
-      font-weight: 700;
+    .hero-title .accent {
+      color: var(--pink-deep);
+      position: relative;
     }
 
-    .hero-subtitle {
-      color: rgba(255,255,255,0.92);
+    .hero-title .accent::after {
+      content: '';
+      position: absolute;
+      bottom: 2px; left: 0; right: 0;
+      height: 6px;
+      background: rgba(242,167,187,0.35);
+      border-radius: 3px;
+      z-index: -1;
+    }
+
+    .hero-sub {
       font-size: 14px;
-      font-weight: 500;
-      margin-bottom: 22px;
-      line-height: 1.7;
+      color: var(--text-mid);
+      margin-bottom: 28px;
+      line-height: 1.8;
     }
 
-    .hero-subtitle strong {
-      color: var(--accent-yellow);
+    .hero-sub strong {
+      color: var(--pink-deep);
       font-weight: 700;
     }
 
-    /* CTA Button */
+    /* 花の装飾 */
+    .flower-deco {
+      font-size: 22px;
+      margin-bottom: 8px;
+      opacity: 0.7;
+    }
+
+    /* ===== CTA BUTTON ===== */
     .cta-btn {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
-      background: var(--line-green);
+      width: 100%;
+      max-width: 340px;
+      margin: 0 auto 10px;
+      padding: 18px 24px;
+      background: linear-gradient(135deg, #F2A7BB 0%, #F4A882 100%);
       color: #fff;
+      font-family: 'Zen Maru Gothic', sans-serif;
       font-size: 17px;
       font-weight: 700;
-      text-decoration: none;
-      padding: 18px 24px;
       border-radius: 50px;
-      box-shadow: 0 6px 20px rgba(6,199,85,0.45);
-      transition: background 0.2s, transform 0.1s;
-      width: 100%;
-      max-width: 360px;
-      margin: 0 auto;
+      text-decoration: none;
+      box-shadow: 0 6px 20px rgba(242,167,187,0.5), 0 2px 8px rgba(0,0,0,0.08);
+      transition: transform 0.15s, box-shadow 0.15s;
       position: relative;
+      overflow: hidden;
     }
 
-    .cta-btn:active {
-      background: var(--line-green-dark);
-      transform: scale(0.98);
+    .cta-btn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 60%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transform: skewX(-20deg);
     }
 
-    .cta-btn .line-icon {
-      width: 28px;
-      height: 28px;
+    .cta-btn .cta-icon {
+      width: 28px; height: 28px;
       background: #fff;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
     }
 
-    .cta-btn .line-icon svg {
-      width: 20px;
-      height: 20px;
-    }
-
-    .cta-btn-sub {
-      font-size: 11px;
-      font-weight: 400;
-      opacity: 0.85;
-      display: block;
-      margin-top: 2px;
+    .cta-btn .cta-icon svg {
+      width: 18px; height: 18px;
     }
 
     .cta-btn-text { text-align: left; }
+    .cta-btn-text .main { display: block; font-size: 17px; }
+    .cta-btn-text .sub { display: block; font-size: 11px; opacity: 0.9; font-weight: 400; }
 
     .cta-note {
-      color: rgba(255,255,255,0.75);
+      text-align: center;
       font-size: 11px;
-      margin-top: 10px;
-      text-align: center;
+      color: var(--text-light);
+      margin-bottom: 6px;
     }
 
-    .hero-image-area {
-      margin-top: 24px;
-      text-align: center;
-    }
-
-    .hero-illust {
-      width: 100%;
-      max-width: 360px;
-      display: block;
-      margin: 0 auto;
-    }
-
-    /* ===== WAVE DIVIDER ===== */
-    .wave {
-      display: block;
-      width: 100%;
-      height: 40px;
-      background: linear-gradient(160deg, #2A7A58 0%, #3DAB7B 45%, #6DCFA0 100%);
-      clip-path: ellipse(55% 100% at 50% 0%);
-    }
-
-    /* ===== STRENGTH SECTION ===== */
+    /* ===== SECTION COMMON ===== */
     .section {
-      padding: 40px 20px;
+      padding: 40px 24px;
+      position: relative;
     }
 
     .section-label {
@@ -222,215 +233,204 @@
       font-size: 11px;
       font-weight: 700;
       letter-spacing: 0.15em;
-      color: var(--green-main);
+      color: var(--pink-main);
       margin-bottom: 8px;
       text-transform: uppercase;
     }
 
     .section-title {
-      text-align: center;
-      font-family: 'Zen Maru Gothic', sans-serif;
+      font-family: 'Shippori Mincho', serif;
       font-size: 22px;
-      font-weight: 900;
+      font-weight: 700;
+      text-align: center;
       color: var(--text-dark);
       line-height: 1.5;
       margin-bottom: 28px;
     }
 
-    .section-title em {
-      color: var(--green-main);
-      font-style: normal;
+    .section-title .em {
+      color: var(--pink-deep);
+      font-style: italic;
     }
 
-    /* Feature Cards */
-    .feature-cards {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
+    /* ===== BENEFIT SECTION ===== */
+    .benefit-section {
+      background:
+        radial-gradient(ellipse at 90% 0%, rgba(242,167,187,0.2) 0%, transparent 50%),
+        radial-gradient(ellipse at 0% 100%, rgba(253,222,203,0.25) 0%, transparent 50%),
+        #FFF8F0;
     }
 
-    .feature-card {
-      background: var(--bg-pale);
-      border-radius: 16px;
-      padding: 20px 20px;
-      display: flex;
-      align-items: flex-start;
-      gap: 16px;
+    .benefit-card {
+      background: rgba(255,255,255,0.85);
+      border: 1.5px solid rgba(242,167,187,0.3);
+      border-radius: 20px;
+      padding: 24px 20px;
+      margin-bottom: 16px;
+      position: relative;
+      backdrop-filter: blur(4px);
     }
 
-    .feature-card-num {
-      width: 44px;
-      height: 44px;
-      background: var(--green-main);
-      border-radius: 12px;
-      display: flex;
+    .benefit-card:last-child { margin-bottom: 0; }
+
+    .benefit-num {
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      flex-shrink: 0;
-      font-size: 20px;
-      font-weight: 900;
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, #F2A7BB, #F4A882);
       color: #fff;
-      font-family: 'Zen Maru Gothic', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      border-radius: 50%;
+      margin-bottom: 12px;
+      font-family: 'Shippori Mincho', serif;
     }
 
-    .feature-card-body {}
-
-    .feature-card-title {
+    .benefit-title {
       font-size: 16px;
       font-weight: 700;
       color: var(--text-dark);
-      margin-bottom: 6px;
-      line-height: 1.4;
-    }
-
-    .feature-card-title em {
-      color: var(--green-main);
-      font-style: normal;
-    }
-
-    .feature-card-desc {
-      font-size: 13px;
-      color: var(--text-mid);
-      line-height: 1.7;
-    }
-
-    /* ===== WORRY SECTION ===== */
-    .worry-section {
-      background: linear-gradient(135deg, #1A4A35 0%, #2A7A58 100%);
-      padding: 40px 20px;
-    }
-
-    .worry-section .section-label { color: var(--accent-yellow); }
-    .worry-section .section-title { color: #fff; }
-    .worry-section .section-title em { color: var(--accent-yellow); }
-
-    .worry-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 28px;
-    }
-
-    .worry-item {
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 12px;
-      padding: 14px 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .worry-check {
-      width: 28px;
-      height: 28px;
-      background: var(--accent-yellow);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      font-size: 14px;
-      font-weight: 900;
-      color: var(--text-dark);
-    }
-
-    .worry-text {
-      font-size: 14px;
-      font-weight: 500;
-      color: rgba(255,255,255,0.95);
+      margin-bottom: 8px;
       line-height: 1.5;
     }
 
-    .worry-resolve {
-      background: rgba(255,255,255,0.12);
-      border-radius: 16px;
+    .benefit-title .em { color: var(--pink-deep); }
+
+    .benefit-desc {
+      font-size: 13px;
+      color: var(--text-mid);
+      line-height: 1.8;
+    }
+
+    .benefit-deco {
+      position: absolute;
+      top: 16px; right: 20px;
+      font-size: 28px;
+      opacity: 0.25;
+    }
+
+    /* ===== FOR YOU SECTION ===== */
+    .foryou-section {
+      background:
+        radial-gradient(ellipse at 20% 20%, rgba(216,208,240,0.3) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(184,232,216,0.3) 0%, transparent 50%),
+        #FFF0F4;
+    }
+
+    .check-list {
+      list-style: none;
+      margin-bottom: 28px;
+    }
+
+    .check-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 12px 0;
+      border-bottom: 1px dashed rgba(242,167,187,0.4);
+      font-size: 14px;
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+
+    .check-list li:last-child { border-bottom: none; }
+
+    .check-icon {
+      flex-shrink: 0;
+      width: 22px; height: 22px;
+      background: linear-gradient(135deg, #F2A7BB, #F4A882);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 1px;
+    }
+
+    .check-icon svg {
+      width: 12px; height: 12px;
+      stroke: #fff;
+      stroke-width: 2.5;
+      fill: none;
+    }
+
+    .consult-box {
+      background: rgba(255,255,255,0.8);
+      border: 1.5px solid rgba(242,167,187,0.35);
+      border-radius: 20px;
       padding: 20px;
       text-align: center;
     }
 
-    .worry-resolve-title {
-      font-size: 13px;
+    .consult-box .label {
+      font-size: 12px;
+      color: var(--pink-deep);
       font-weight: 700;
-      color: var(--accent-yellow);
       margin-bottom: 8px;
-      letter-spacing: 0.05em;
     }
 
-    .worry-resolve-text {
-      font-size: 15px;
-      font-weight: 700;
-      color: #fff;
-      line-height: 1.7;
+    .consult-box p {
+      font-size: 14px;
+      color: var(--text-dark);
+      line-height: 1.8;
     }
 
-    /* ===== FLOW SECTION ===== */
-    .flow-section {
-      background: var(--bg-pale);
-      padding: 40px 20px;
+    .consult-box strong { color: var(--pink-deep); }
+
+    /* ===== STEPS SECTION ===== */
+    .steps-section {
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(253,222,203,0.35) 0%, transparent 60%),
+        #FFF8F0;
     }
 
-    .flow-steps {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-
-    .flow-step {
+    .step-item {
       display: flex;
       gap: 16px;
+      margin-bottom: 24px;
       align-items: flex-start;
-      position: relative;
     }
 
-    .flow-step:not(:last-child)::after {
-      content: '';
-      position: absolute;
-      left: 19px;
-      top: 44px;
-      width: 2px;
-      height: calc(100% - 8px);
-      background: var(--green-light);
-    }
+    .step-item:last-child { margin-bottom: 0; }
 
-    .flow-step-left {
+    .step-num-wrap {
+      flex-shrink: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
-      flex-shrink: 0;
     }
 
-    .flow-step-num {
-      width: 40px;
-      height: 40px;
-      background: var(--green-main);
+    .step-num {
+      width: 44px; height: 44px;
+      background: linear-gradient(135deg, #F2A7BB, #FDDECB);
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      font-weight: 900;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Shippori Mincho', serif;
+      font-size: 20px;
+      font-weight: 700;
       color: #fff;
-      font-family: 'Zen Maru Gothic', sans-serif;
-      flex-shrink: 0;
-      position: relative;
-      z-index: 1;
     }
 
-    .flow-step-body {
-      padding-bottom: 28px;
+    .step-line {
+      width: 2px;
       flex: 1;
+      min-height: 30px;
+      background: linear-gradient(to bottom, rgba(242,167,187,0.5), rgba(253,222,203,0.3));
+      margin-top: 6px;
     }
 
-    .flow-step-title {
+    .step-item:last-child .step-line { display: none; }
+
+    .step-content {
+      padding-top: 8px;
+    }
+
+    .step-title {
       font-size: 15px;
       font-weight: 700;
       color: var(--text-dark);
       margin-bottom: 4px;
-      padding-top: 8px;
     }
 
-    .flow-step-desc {
+    .step-desc {
       font-size: 13px;
       color: var(--text-mid);
       line-height: 1.7;
@@ -438,408 +438,353 @@
 
     /* ===== TRUST SECTION ===== */
     .trust-section {
-      padding: 40px 20px;
+      background:
+        radial-gradient(ellipse at 80% 20%, rgba(184,232,216,0.3) 0%, transparent 50%),
+        radial-gradient(ellipse at 10% 80%, rgba(242,167,187,0.2) 0%, transparent 50%),
+        #F7FBF9;
     }
 
-    .trust-number {
+    .trust-stat {
       text-align: center;
-      background: var(--green-pale);
+      background: rgba(255,255,255,0.85);
+      border: 1.5px solid rgba(126,207,181,0.4);
       border-radius: 20px;
-      padding: 28px 20px;
-      margin-bottom: 20px;
+      padding: 20px 16px;
+      margin-bottom: 16px;
     }
 
-    .trust-number-label {
-      font-size: 13px;
-      color: var(--text-mid);
-      margin-bottom: 6px;
+    .trust-stat .num {
+      font-family: 'Shippori Mincho', serif;
+      font-size: 40px;
+      font-weight: 800;
+      color: var(--pink-deep);
+      line-height: 1.1;
     }
 
-    .trust-number-value {
-      font-family: 'Zen Maru Gothic', sans-serif;
-      font-size: 52px;
-      font-weight: 900;
-      color: var(--green-main);
-      line-height: 1;
-      margin-bottom: 4px;
-    }
-
-    .trust-number-unit {
-      font-size: 20px;
+    .trust-stat .unit {
+      font-size: 18px;
       font-weight: 700;
-      color: var(--green-dark);
+      color: var(--pink-deep);
     }
 
-    .trust-number-sub {
+    .trust-stat .label {
+      font-size: 12px;
+      color: var(--text-mid);
+      margin-top: 4px;
+    }
+
+    .trust-list {
+      list-style: none;
+    }
+
+    .trust-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 12px 0;
+      border-bottom: 1px dashed rgba(126,207,181,0.4);
+      font-size: 14px;
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+
+    .trust-list li:last-child { border-bottom: none; }
+
+    .trust-icon {
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+
+    /* ===== FINAL CTA ===== */
+    .final-cta {
+      background: linear-gradient(160deg, #FFF0F4 0%, #FFF8F0 100%);
+      padding: 48px 24px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .final-cta::before {
+      content: '';
+      position: absolute;
+      top: -40px; left: 50%;
+      transform: translateX(-50%);
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(242,167,187,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .final-cta-title {
+      font-family: 'Shippori Mincho', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+
+    .final-cta-sub {
       font-size: 13px;
       color: var(--text-mid);
-      margin-top: 6px;
-    }
-
-    .trust-points {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .trust-point {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: var(--bg-pale);
-      border-radius: 12px;
-      padding: 14px 16px;
-    }
-
-    .trust-point-icon {
-      font-size: 22px;
-      flex-shrink: 0;
-    }
-
-    .trust-point-text {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-dark);
-      line-height: 1.5;
-    }
-
-    /* ===== CTA SECTION ===== */
-    .cta-section {
-      background: linear-gradient(160deg, #2A7A58 0%, #3DAB7B 50%, #6DCFA0 100%);
-      padding: 44px 20px 52px;
-      text-align: center;
-    }
-
-    .cta-section-title {
-      font-family: 'Zen Maru Gothic', sans-serif;
-      font-size: 22px;
-      font-weight: 900;
-      color: #fff;
-      line-height: 1.5;
-      margin-bottom: 8px;
-    }
-
-    .cta-section-sub {
-      font-size: 13px;
-      color: rgba(255,255,255,0.85);
-      margin-bottom: 24px;
-      line-height: 1.7;
-    }
-
-    .cta-section .cta-note {
-      margin-top: 14px;
-    }
-
-    /* ===== STICKY CTA ===== */
-    .sticky-cta {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: rgba(255,255,255,0.97);
-      backdrop-filter: blur(8px);
-      padding: 12px 20px 20px;
-      box-shadow: 0 -4px 20px rgba(0,0,0,0.12);
-      z-index: 100;
-      display: none;
-    }
-
-    .sticky-cta.visible {
-      display: block;
-    }
-
-    .sticky-cta .cta-btn {
-      max-width: 100%;
+      margin-bottom: 28px;
+      line-height: 1.8;
     }
 
     /* ===== FOOTER ===== */
     footer {
-      background: #1A1A1A;
-      padding: 24px 20px;
+      background: var(--text-dark);
+      padding: 24px 16px;
       text-align: center;
-    }
-
-    footer p {
       font-size: 11px;
-      color: rgba(255,255,255,0.4);
-      line-height: 1.8;
+      color: rgba(255,255,255,0.5);
+      line-height: 2;
     }
 
-    /* ===== UTILITIES ===== */
-    .cta-wrap {
+    /* ===== STICKY BOTTOM CTA ===== */
+    .sticky-cta {
+      position: fixed;
+      bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 480px;
+      padding: 12px 20px 20px;
+      background: linear-gradient(to top, rgba(255,248,240,0.98) 60%, transparent);
+      z-index: 100;
+    }
+
+    .sticky-cta .cta-btn {
+      box-shadow: 0 8px 24px rgba(242,167,187,0.55), 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    /* ===== DIVIDER ===== */
+    .wave-divider {
+      width: 100%;
+      overflow: hidden;
+      line-height: 0;
+    }
+
+    .wave-divider svg {
+      display: block;
+      width: 100%;
+    }
+
+    /* ===== PETAL DECO ===== */
+    .petal-row {
       text-align: center;
-      margin-top: 28px;
-    }
-
-    .tag {
-      display: inline-block;
-      background: var(--accent-red);
-      color: #fff;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 3px 10px;
-      border-radius: 4px;
-      margin-bottom: 6px;
-      letter-spacing: 0.05em;
-    }
-
-    .tag.green {
-      background: var(--green-main);
-    }
-
-    .divider {
-      height: 1px;
-      background: #EEEEEE;
-      margin: 0 20px;
+      font-size: 16px;
+      margin: 16px 0 0;
+      opacity: 0.5;
+      letter-spacing: 4px;
     }
   </style>
 </head>
 <body>
 
+  <!-- TOP BANNER -->
+  <div class="top-banner">🌸 保育士専門エージェント｜提携施設5,000件以上</div>
+
   <!-- ===== HERO ===== -->
   <section class="hero">
-    <div class="hero-inner">
-      <div class="hero-badge">🎓 保育士試験 2026年前期</div>
-      <div class="hero-date">4月18日（金）・19日（土）実施</div>
-      <h1 class="hero-title">
-        <span>試験お疲れ様でした！</span>
-        解答速報を<br>LINEで受け取る
-      </h1>
-      <p class="hero-subtitle">
-        試験終了後、<strong>いち早く解答速報をお届け。</strong><br>
-        今回の試験のポイント解説もLINEで配信中。
-      </p>
-      <a
-        href="https://lin.ee/ps4YEbq"
-        class="cta-btn"
-        onclick="gtag('event', 'line_add_click', {'event_category': 'CTA', 'event_label': 'hero_cta'});"
-      >
-        <span class="line-icon">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2C6.477 2 2 6.145 2 11.243c0 2.561 1.07 4.87 2.793 6.572.154.147.25.35.25.565 0 .44-.36.8-.8.8H4.1c-.44 0-.8-.36-.8-.8v-.01c0-.22.09-.43.25-.58C5.17 16.14 6 13.77 6 11.243 6 7.354 8.686 4.2 12 4.2s6 3.154 6 7.043c0 2.527-.83 4.897-2.55 6.304.16.15.25.36.25.58v.01c0 .44-.36.8-.8.8h-.143c-.44 0-.8-.36-.8-.8 0-.215.096-.418.25-.565C15.93 16.113 17 13.804 17 11.243 17 6.145 17.523 2 12 2z" fill="#06C755"/>
-            <path d="M19.95 11.243C19.95 5.59 16.42 1 12 1S4.05 5.59 4.05 11.243c0 2.79 1.1 5.31 2.9 7.15-.01.04-.01.08-.01.12 0 .99.81 1.8 1.8 1.8h.143c.99 0 1.8-.81 1.8-1.8 0-.42-.15-.81-.4-1.11C11.77 16.03 12.96 16.03 14.52 17.4c-.25.3-.4.69-.4 1.11 0 .99.81 1.8 1.8 1.8H16.06c.99 0 1.8-.81 1.8-1.8 0-.04 0-.08-.01-.12 1.8-1.84 2.9-4.36 2.9-7.15z" fill="#06C755" opacity="0.2"/>
-          </svg>
-        </span>
-        <span class="cta-btn-text">
-          LINEで解答速報を受け取る
-          <span class="cta-btn-sub">無料・登録30秒</span>
-        </span>
-      </a>
-      <p class="cta-note">✓ 転職の強制は一切ありません</p>
-    </div>
-    <div class="hero-image-area">
-      <!-- decorative wave -->
-    </div>
+    <div class="flower-deco">🌸🌷🌸</div>
+    <div class="hero-badge">保育士試験 2026年前期</div>
+    <p class="hero-date">4月18日（金）・19日（土）実施</p>
+    <p class="hero-catch">試験お疲れ様でした！</p>
+    <h1 class="hero-title">
+      <span class="accent">解答速報</span>を<br>
+      LINEで受け取る
+    </h1>
+    <p class="hero-sub">
+      試験終了後、<strong>いち早く解答速報をお届け。</strong><br>
+      今回の試験のポイント解説も<br>LINEで配信中。
+    </p>
+
+    <a href="https://lin.ee/ps4YEbq"
+       class="cta-btn"
+       onclick="gtag('event', 'line_add_click', {'event_category': 'CTA', 'event_label': 'hero_btn'});">
+      <span class="cta-icon">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C6.48 2 2 6.03 2 11c0 3.07 1.63 5.78 4.14 7.5L5.5 22l3.86-1.93C10.22 20.35 11.1 20.5 12 20.5c5.52 0 10-4.03 10-9S17.52 2 12 2z" fill="#06C755"/>
+        </svg>
+      </span>
+      <span class="cta-btn-text">
+        <span class="main">LINEで解答速報を受け取る</span>
+        <span class="sub">無料・登録30秒</span>
+      </span>
+    </a>
+    <p class="cta-note">✓ 転職の強制は一切ありません</p>
+    <div class="petal-row">🌸 🌷 🌸 🌷 🌸</div>
   </section>
 
-  <!-- ===== FEATURES ===== -->
-  <section class="section">
+  <!-- ===== BENEFIT ===== -->
+  <section class="section benefit-section">
     <p class="section-label">What You Get</p>
-    <h2 class="section-title">LINEに登録すると<br><em>2つの特典</em>が届きます</h2>
+    <h2 class="section-title">LINEに登録すると<br><span class="em">2つの特典</span>が届きます</h2>
 
-    <div class="feature-cards">
-      <div class="feature-card">
-        <div class="feature-card-num">1</div>
-        <div class="feature-card-body">
-          <div class="feature-card-title">
-            <em>解答速報</em>をいち早くお届け
-          </div>
-          <div class="feature-card-desc">
-            試験終了後、速やかに解答速報をLINEで配信。自己採点がすぐにできます。合格発表を待たずに結果の見通しが立てられます。
-          </div>
-        </div>
-      </div>
-
-      <div class="feature-card">
-        <div class="feature-card-num">2</div>
-        <div class="feature-card-body">
-          <div class="feature-card-title">
-            今回の試験の<em>ポイント解説</em>を配信
-          </div>
-          <div class="feature-card-desc">
-            頻出テーマや難問の解説をLINEでお届け。「なぜその答えになるのか」がわかるから、次回の試験対策にも活かせます。
-          </div>
-        </div>
-      </div>
+    <div class="benefit-card">
+      <div class="benefit-num">1</div>
+      <div class="benefit-deco">📋</div>
+      <p class="benefit-title"><span class="em">解答速報</span>をいち早くお届け</p>
+      <p class="benefit-desc">試験終了後、速やかに解答速報をLINEで配信。自己採点がすぐにできます。合格発表を待たずに結果の見通しが立てられます。</p>
     </div>
 
-    <div class="cta-wrap">
-      <a
-        href="https://lin.ee/ps4YEbq"
-        class="cta-btn"
-        onclick="gtag('event', 'line_add_click', {'event_category': 'CTA', 'event_label': 'feature_cta'});"
-      >
-        <span class="line-icon">
-          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="40" height="40" rx="8" fill="white"/>
-            <path d="M20 8C13.373 8 8 12.925 8 19c0 3.073 1.284 5.844 3.352 7.887-.185.177-.3.42-.3.678 0 .528.432.96.96.96h.171c.528 0 .96-.432.96-.96 0-.258-.115-.501-.3-.678C10.716 24.844 9.432 22.073 9.432 19c0-5.837 4.74-10.568 10.568-10.568S30.568 13.163 30.568 19c0 3.073-1.284 5.844-3.352 7.887-.185.177-.3.42-.3.678 0 .528.432.96.96.96h.171c.528 0 .96-.432.96-.96 0-.258-.115-.501-.3-.678C30.716 24.844 32 22.073 32 19c0-6.075-5.373-11-12-11z" fill="#06C755"/>
-          </svg>
-        </span>
-        <span class="cta-btn-text">
-          無料でLINE登録する
-          <span class="cta-btn-sub">解答速報＋ポイント解説を受け取る</span>
-        </span>
-      </a>
-      <p style="font-size:11px; color:#999; margin-top:8px;">✓ 転職の強制は一切ありません</p>
+    <div class="benefit-card">
+      <div class="benefit-num">2</div>
+      <div class="benefit-deco">✏️</div>
+      <p class="benefit-title">今回の試験の<span class="em">ポイント解説</span>を配信</p>
+      <p class="benefit-desc">頻出テーマや難問の解説をLINEでお届け。「なぜその答えになるのか」がわかるから、次回の試験対策にも活かせます。</p>
     </div>
+
+    <a href="https://lin.ee/ps4YEbq"
+       class="cta-btn"
+       style="margin-top:28px;"
+       onclick="gtag('event', 'line_add_click', {'event_category': 'CTA', 'event_label': 'benefit_btn'});">
+      <span class="cta-icon">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C6.48 2 2 6.03 2 11c0 3.07 1.63 5.78 4.14 7.5L5.5 22l3.86-1.93C10.22 20.35 11.1 20.5 12 20.5c5.52 0 10-4.03 10-9S17.52 2 12 2z" fill="#06C755"/>
+        </svg>
+      </span>
+      <span class="cta-btn-text">
+        <span class="main">無料でLINE登録する</span>
+        <span class="sub">解答速報＋ポイント解説を受け取る</span>
+      </span>
+    </a>
+    <p class="cta-note" style="margin-top:8px;">✓ 転職の強制は一切ありません</p>
   </section>
 
-  <div class="divider"></div>
-
-  <!-- ===== WORRY ===== -->
-  <section class="worry-section">
+  <!-- ===== FOR YOU ===== -->
+  <section class="section foryou-section">
     <p class="section-label">For You</p>
-    <h2 class="section-title" style="color:#fff;">こんな方に<em>おすすめ</em>です</h2>
+    <h2 class="section-title">こんな方に<span class="em">おすすめ</span>です</h2>
 
-    <div class="worry-list">
-      <div class="worry-item">
-        <div class="worry-check">✓</div>
-        <div class="worry-text">試験が終わって、自分の答えが合っているか気になる</div>
-      </div>
-      <div class="worry-item">
-        <div class="worry-check">✓</div>
-        <div class="worry-text">合格したら、保育士として働くことを考えている</div>
-      </div>
-      <div class="worry-item">
-        <div class="worry-check">✓</div>
-        <div class="worry-text">保育補助として働いていて、正社員にステップアップしたい</div>
-      </div>
-      <div class="worry-item">
-        <div class="worry-check">✓</div>
-        <div class="worry-text">異業種から保育士への転職を考えているが、不安がある</div>
-      </div>
-      <div class="worry-item">
-        <div class="worry-check">✓</div>
-        <div class="worry-text">子育て経験を活かして、保育の仕事に就きたい</div>
-      </div>
-    </div>
+    <ul class="check-list">
+      <li>
+        <span class="check-icon">
+          <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
+        </span>
+        試験が終わって、自分の答えが合っているか気になる
+      </li>
+      <li>
+        <span class="check-icon">
+          <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
+        </span>
+        合格したら、保育士として働くことを考えている
+      </li>
+      <li>
+        <span class="check-icon">
+          <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
+        </span>
+        保育補助として働いていて、正社員にステップアップしたい
+      </li>
+      <li>
+        <span class="check-icon">
+          <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
+        </span>
+        異業種から保育士への転職を考えているが、不安がある
+      </li>
+      <li>
+        <span class="check-icon">
+          <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
+        </span>
+        子育て経験を活かして、保育の仕事に就きたい
+      </li>
+    </ul>
 
-    <div class="worry-resolve">
-      <div class="worry-resolve-title">▼ そのお悩み、LINEで相談できます</div>
-      <div class="worry-resolve-text">
-        合格後の就職先探しから、<br>
-        未経験の不安まで。<br>
-        <strong style="color:var(--accent-yellow);">保育士専門のキャリアアドバイザー</strong>が<br>
-        LINEで無料サポートします。
-      </div>
+    <div class="consult-box">
+      <p class="label">▼ そのお悩み、LINEで相談できます</p>
+      <p>合格後の就職先探しから、未経験の不安まで。<br><strong>保育士専門のキャリアアドバイザー</strong>が<br>LINEで無料サポートします。</p>
     </div>
   </section>
 
-  <!-- ===== FLOW ===== -->
-  <section class="flow-section">
+  <!-- ===== STEPS ===== -->
+  <section class="section steps-section">
     <p class="section-label">How It Works</p>
-    <h2 class="section-title">登録から<em>3ステップ</em>で<br>解答速報が届きます</h2>
+    <h2 class="section-title">登録から<span class="em">3ステップ</span>で<br>解答速報が届きます</h2>
 
-    <div class="flow-steps">
-      <div class="flow-step">
-        <div class="flow-step-left">
-          <div class="flow-step-num">1</div>
-        </div>
-        <div class="flow-step-body">
-          <div class="flow-step-title">LINEを友だち追加する</div>
-          <div class="flow-step-desc">下のボタンからLINEを友だち追加。30秒で完了します。</div>
-        </div>
+    <div class="step-item">
+      <div class="step-num-wrap">
+        <div class="step-num">1</div>
+        <div class="step-line"></div>
       </div>
-
-      <div class="flow-step">
-        <div class="flow-step-left">
-          <div class="flow-step-num">2</div>
-        </div>
-        <div class="flow-step-body">
-          <div class="flow-step-title">現在の状況を1問だけ回答</div>
-          <div class="flow-step-desc">「今のお仕事は？」の1問に答えると、あなたに合った情報をお届けできます。</div>
-        </div>
-      </div>
-
-      <div class="flow-step">
-        <div class="flow-step-left">
-          <div class="flow-step-num">3</div>
-        </div>
-        <div class="flow-step-body">
-          <div class="flow-step-title">解答速報＋ポイント解説が届く</div>
-          <div class="flow-step-desc">試験終了後、LINEに解答速報URLとポイント解説が届きます。自己採点してみましょう。</div>
-        </div>
+      <div class="step-content">
+        <p class="step-title">🌸 LINEを友だち追加する</p>
+        <p class="step-desc">下のボタンからLINEを友だち追加。30秒で完了します。</p>
       </div>
     </div>
 
-    <div class="cta-wrap">
-      <a
-        href="https://lin.ee/ps4YEbq"
-        class="cta-btn"
-        onclick="gtag('event', 'line_add_click', {'event_category': 'CTA', 'event_label': 'flow_cta'});"
-      >
-        <span class="line-icon">
-          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="40" height="40" rx="8" fill="white"/>
-            <path d="M20 8C13.373 8 8 12.925 8 19c0 3.073 1.284 5.844 3.352 7.887-.185.177-.3.42-.3.678 0 .528.432.96.96.96h.171c.528 0 .96-.432.96-.96 0-.258-.115-.501-.3-.678C10.716 24.844 9.432 22.073 9.432 19c0-5.837 4.74-10.568 10.568-10.568S30.568 13.163 30.568 19c0 3.073-1.284 5.844-3.352 7.887-.185.177-.3.678 0 .528.432.96.96.96h.171c.528 0 .96-.432.96-.96 0-.258-.115-.501-.3-.678C30.716 24.844 32 22.073 32 19c0-6.075-5.373-11-12-11z" fill="#06C755"/>
-          </svg>
-        </span>
-        <span class="cta-btn-text">
-          今すぐLINEで登録する
-          <span class="cta-btn-sub">無料・登録30秒</span>
-        </span>
-      </a>
+    <div class="step-item">
+      <div class="step-num-wrap">
+        <div class="step-num">2</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-content">
+        <p class="step-title">💬 現在の状況を1問だけ回答</p>
+        <p class="step-desc">「今のお仕事は？」の1問に答えると、あなたに合った情報をお届けできます。</p>
+      </div>
+    </div>
+
+    <div class="step-item">
+      <div class="step-num-wrap">
+        <div class="step-num">3</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-content">
+        <p class="step-title">📩 解答速報＋ポイント解説が届く</p>
+        <p class="step-desc">試験終了後、LINEに解答速報URLとポイント解説が届きます。自己採点してみましょう。</p>
+      </div>
     </div>
   </section>
 
   <!-- ===== TRUST ===== -->
-  <section class="trust-section">
+  <section class="section trust-section">
     <p class="section-label">Trust</p>
-    <h2 class="section-title">保育士専門エージェントが<br><em>運営しています</em></h2>
+    <h2 class="section-title">保育士専門エージェントが<br><span class="em">運営しています</span></h2>
 
-    <div class="trust-number">
-      <div class="trust-number-label">全国の提携施設数</div>
-      <div class="trust-number-value">5,000<span class="trust-number-unit">件以上</span></div>
-      <div class="trust-number-sub">認可保育園・小規模保育所・企業内保育など幅広く対応</div>
+    <div class="trust-stat">
+      <div><span class="num">5,000</span><span class="unit">件以上</span></div>
+      <p class="label">全国の提携施設数<br>認可保育園・小規模保育所・企業内保育など幅広く対応</p>
     </div>
 
-    <div class="trust-points">
-      <div class="trust-point">
-        <div class="trust-point-icon">🔍</div>
-        <div class="trust-point-text"><strong>保育士専門</strong>のキャリアアドバイザーが担当。業界知識が豊富で、初めての転職でも安心。</div>
-      </div>
-      <div class="trust-point">
-        <div class="trust-point-icon">💬</div>
-        <div class="trust-point-text"><strong>LINEで気軽に相談OK。</strong>電話が苦手な方も、メッセージで転職相談ができます。</div>
-      </div>
-      <div class="trust-point">
-        <div class="trust-point-icon">✋</div>
-        <div class="trust-point-text"><strong>転職の強制は一切なし。</strong>「まず話を聞くだけ」「情報収集だけ」でも大丈夫です。</div>
-      </div>
-      <div class="trust-point">
-        <div class="trust-point-icon">🏫</div>
-        <div class="trust-point-text"><strong>試験合格者・実習未経験者も歓迎</strong>の求人を多数保有。養成校卒でなくても安心。</div>
-      </div>
-    </div>
+    <ul class="trust-list">
+      <li>
+        <span class="trust-icon">🔍</span>
+        <span><strong>保育士専門</strong>のキャリアアドバイザーが担当。業界知識が豊富で、初めての転職でも安心。</span>
+      </li>
+      <li>
+        <span class="trust-icon">💬</span>
+        <span><strong>LINEで気軽に相談OK。</strong>電話が苦手な方も、メッセージで転職相談ができます。</span>
+      </li>
+      <li>
+        <span class="trust-icon">✋</span>
+        <span><strong>転職の強制は一切なし。</strong>「まず話を聞くだけ」「情報収集だけ」でも大丈夫です。</span>
+      </li>
+      <li>
+        <span class="trust-icon">🏫</span>
+        <span><strong>試験合格者・実習未経験者も歓迎</strong>の求人を多数保有。養成校卒でなくても安心。</span>
+      </li>
+    </ul>
   </section>
 
   <!-- ===== FINAL CTA ===== -->
-  <section class="cta-section">
-    <span class="tag">無料・登録30秒</span>
-    <h2 class="cta-section-title">
-      まずは解答速報を<br>受け取ってみてください
-    </h2>
-    <p class="cta-section-sub">
-      転職のことは、後からゆっくり考えれば大丈夫。<br>
-      今日は試験お疲れ様でした。
-    </p>
-    <a
-      href="https://lin.ee/ps4YEbq"
-      class="cta-btn"
-      onclick="gtag('event', 'line_add_click', {'event_category': 'CTA', 'event_label': 'final_cta'});"
-    >
-      <span class="line-icon">
-        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect width="40" height="40" rx="8" fill="white"/>
-          <path d="M20 8C13.373 8 8 12.925 8 19c0 3.073 1.284 5.844 3.352 7.887-.185.177-.3.42-.3.678 0 .528.432.96.96.96h.171c.528 0 .96-.432.96-.96 0-.258-.115-.501-.3-.678C10.716 24.844 9.432 22.073 9.432 19c0-5.837 4.74-10.568 10.568-10.568S30.568 13.163 30.568 19c0 3.073-1.284 5.844-3.352 7.887-.185.177-.3.42-.3.678 0 .528.432.96.96.96h.171c.528 0 .96-.432.96-.96 0-.258-.115-.501-.3-.678C30.716 24.844 32 22.073 32 19c0-6.075-5.373-11-12-11z" fill="#06C755"/>
+  <section class="final-cta">
+    <div class="flower-deco">🌷🌸🌷</div>
+    <h2 class="final-cta-title">まずは解答速報を<br>受け取ってみてください</h2>
+    <p class="final-cta-sub">転職のことは、後からゆっくり考えれば大丈夫。<br>今日は試験お疲れ様でした。</p>
+
+    <a href="https://lin.ee/ps4YEbq"
+       class="cta-btn"
+       onclick="gtag('event', 'line_add_click', {'event_category': 'CTA', 'event_label': 'final_btn'});">
+      <span class="cta-icon">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C6.48 2 2 6.03 2 11c0 3.07 1.63 5.78 4.14 7.5L5.5 22l3.86-1.93C10.22 20.35 11.1 20.5 12 20.5c5.52 0 10-4.03 10-9S17.52 2 12 2z" fill="#06C755"/>
         </svg>
       </span>
       <span class="cta-btn-text">
-        LINEで解答速報を受け取る
-        <span class="cta-btn-sub">転職の強制は一切ありません</span>
+        <span class="main">LINEで解答速報を受け取る</span>
+        <span class="sub">転職の強制は一切ありません</span>
       </span>
     </a>
-    <p class="cta-note">プライバシーポリシーに同意の上ご登録ください</p>
+    <p class="cta-note" style="margin-top:10px;">プライバシーポリシーに同意の上ご登録ください</p>
+    <div class="petal-row" style="margin-top:20px;">🌸 🌷 🌸 🌷 🌸</div>
   </section>
 
   <!-- ===== FOOTER ===== -->
@@ -853,43 +798,21 @@
   </footer>
 
   <!-- ===== STICKY CTA ===== -->
-  <div class="sticky-cta" id="stickyCta">
-    <a
-      href="https://lin.ee/ps4YEbq"
-      class="cta-btn"
-      onclick="gtag('event', 'line_add_click', {'event_category': 'CTA', 'event_label': 'sticky_cta'});"
-    >
-      <span class="line-icon">
-        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect width="40" height="40" rx="8" fill="white"/>
-          <path d="M20 8C13.373 8 8 12.925 8 19c0 3.073 1.284 5.844 3.352 7.887-.185.177-.3.42-.3.678 0 .528.432.96.96.96h.171c.528 0 .96-.432.96-.96 0-.258-.115-.501-.3-.678C10.716 24.844 9.432 22.073 9.432 19c0-5.837 4.74-10.568 10.568-10.568S30.568 13.163 30.568 19c0 3.073-1.284 5.844-3.352 7.887-.185.177-.3.42-.3.678 0 .528.432.96.96.96h.171c.528 0 .96-.432.96-.96 0-.258-.115-.501-.3-.678C30.716 24.844 32 22.073 32 19c0-6.075-5.373-11-12-11z" fill="#06C755"/>
+  <div class="sticky-cta">
+    <a href="https://lin.ee/ps4YEbq"
+       class="cta-btn"
+       onclick="gtag('event', 'line_add_click', {'event_category': 'CTA', 'event_label': 'sticky_btn'});">
+      <span class="cta-icon">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C6.48 2 2 6.03 2 11c0 3.07 1.63 5.78 4.14 7.5L5.5 22l3.86-1.93C10.22 20.35 11.1 20.5 12 20.5c5.52 0 10-4.03 10-9S17.52 2 12 2z" fill="#06C755"/>
         </svg>
       </span>
       <span class="cta-btn-text">
-        LINEで解答速報を受け取る
-        <span class="cta-btn-sub">無料・登録30秒</span>
+        <span class="main">LINEで解答速報を受け取る</span>
+        <span class="sub">無料・登録30秒</span>
       </span>
     </a>
   </div>
-
-  <script>
-    // Sticky CTA: ヒーローCTAがビューポートから消えたら表示
-    const stickyCta = document.getElementById('stickyCta');
-    const heroCta = document.querySelector('.hero .cta-btn');
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) {
-          stickyCta.classList.add('visible');
-        } else {
-          stickyCta.classList.remove('visible');
-        }
-      },
-      { threshold: 0 }
-    );
-
-    if (heroCta) observer.observe(heroCta);
-  </script>
 
 </body>
 </html>
